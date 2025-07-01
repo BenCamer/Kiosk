@@ -1,68 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>School Canteen Kiosk</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      text-align: center;
+      background: #f0f4f8;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    nav {
+      margin: 20px 0;
+    }
+    button {
+      padding: 12px 24px;
+      margin: 8px;
+      border: none;
+      background-color: #0078D4;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005A9E;
     }
     .hidden {
       display: none;
     }
-    nav {
-      margin-top: 20px;
-    }
     .section {
-      margin-top: 20px;
+      margin: 30px auto;
+      max-width: 500px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
-    button {
-      margin: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      text-align: left;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
   <div id="startup-screen">
-    <h1>Welcome to the Canteen</h1>
-    <button onclick="startApp()">Start Order</button>
+    <h1>Welcome to the School Canteen</h1>
+    <button onclick="startApp()">Start Your Order</button>
   </div>
 
   <div id="kiosk-interface" class="hidden">
     <nav>
-      <button onclick="showSection('food')">Food</button>
-      <button onclick="showSection('drinks')">Drinks</button>
-      <button onclick="showCart()">Cart 🛒</button>
+      <button onclick="showSection('food')">🍔 Food</button>
+      <button onclick="showSection('drinks')">🥤 Drinks</button>
+      <button onclick="showCart()">🛒 Cart</button>
     </nav>
 
     <section id="food" class="section hidden">
-      <h2>Food</h2>
-      <button onclick="addToCart('Burger', 5)">Burger - $5</button>
-      <button onclick="addToCart('Pizza', 6)">Pizza - $6</button>
+      <h2>Food Menu</h2>
+      <button onclick="addToCart('Sandwich', 4.5)">Sandwich - $4.50</button>
+      <button onclick="addToCart('Hot Dog', 3.5)">Hot Dog - $3.50</button>
     </section>
 
     <section id="drinks" class="section hidden">
-      <h2>Drinks</h2>
-      <button onclick="addToCart('Water', 2)">Water - $2</button>
-      <button onclick="addToCart('Juice', 3)">Juice - $3</button>
+      <h2>Drink Menu</h2>
+      <button onclick="addToCart('Apple Juice', 2)">Apple Juice - $2.00</button>
+      <button onclick="addToCart('Milk', 1.5)">Milk - $1.50</button>
     </section>
 
     <section id="cart" class="section hidden">
       <h2>Your Cart</h2>
       <ul id="cart-items"></ul>
-      <p>Total: $<span id="total">0</span></p>
+      <p><strong>Total:</strong> $<span id="total">0.00</span></p>
       <button onclick="goToPayment()">Proceed to Payment</button>
     </section>
 
     <section id="payment" class="section hidden">
-      <h2>Payment</h2>
-      <p>Thanks for your order! 🍽️</p>
-      <button onclick="resetApp()">New Order</button>
+      <h2>Payment Complete!</h2>
+      <p>Thank you for your order 🎉</p>
+      <button onclick="resetApp()">Start New Order</button>
     </section>
   </div>
 
@@ -75,9 +104,9 @@
       showSection("food");
     }
 
-    function showSection(sectionId) {
-      document.querySelectorAll(".section").forEach(sec => sec.classList.add("hidden"));
-      document.getElementById(sectionId).classList.remove("hidden");
+    function showSection(id) {
+      document.querySelectorAll(".section").forEach(el => el.classList.add("hidden"));
+      document.getElementById(id).classList.remove("hidden");
     }
 
     function addToCart(item, price) {
@@ -88,15 +117,15 @@
     function showCart() {
       showSection("cart");
       const cartList = document.getElementById("cart-items");
-      cartList.innerHTML = "";
+      cartList.innerHTML = '';
       let total = 0;
       cart.forEach(entry => {
         const li = document.createElement("li");
-        li.textContent = `${entry.item} - $${entry.price}`;
+        li.textContent = `${entry.item} - $${entry.price.toFixed(2)}`;
         cartList.appendChild(li);
         total += entry.price;
       });
-      document.getElementById("total").textContent = total;
+      document.getElementById("total").textContent = total.toFixed(2);
     }
 
     function goToPayment() {

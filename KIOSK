@@ -3,7 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>School Canteen Kiosk</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .hidden {
+      display: none;
+    }
+    nav {
+      margin-top: 20px;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
 
@@ -45,6 +66,49 @@
     </section>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    let cart = [];
+
+    function startApp() {
+      document.getElementById("startup-screen").classList.add("hidden");
+      document.getElementById("kiosk-interface").classList.remove("hidden");
+      showSection("food");
+    }
+
+    function showSection(sectionId) {
+      document.querySelectorAll(".section").forEach(sec => sec.classList.add("hidden"));
+      document.getElementById(sectionId).classList.remove("hidden");
+    }
+
+    function addToCart(item, price) {
+      cart.push({ item, price });
+      alert(`${item} added to cart.`);
+    }
+
+    function showCart() {
+      showSection("cart");
+      const cartList = document.getElementById("cart-items");
+      cartList.innerHTML = "";
+      let total = 0;
+      cart.forEach(entry => {
+        const li = document.createElement("li");
+        li.textContent = `${entry.item} - $${entry.price}`;
+        cartList.appendChild(li);
+        total += entry.price;
+      });
+      document.getElementById("total").textContent = total;
+    }
+
+    function goToPayment() {
+      showSection("payment");
+    }
+
+    function resetApp() {
+      cart = [];
+      document.getElementById("kiosk-interface").classList.add("hidden");
+      document.getElementById("startup-screen").classList.remove("hidden");
+    }
+  </script>
+
 </body>
 </html>

@@ -1,1 +1,50 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>School Canteen Kiosk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="startup-screen">
+    <h1>Welcome to the Canteen</h1>
+    <button onclick="startApp()">Start Order</button>
+  </div>
+
+  <div id="kiosk-interface" class="hidden">
+    <nav>
+      <button onclick="showSection('food')">Food</button>
+      <button onclick="showSection('drinks')">Drinks</button>
+      <button onclick="showCart()">Cart 🛒</button>
+    </nav>
+
+    <section id="food" class="section hidden">
+      <h2>Food</h2>
+      <button onclick="addToCart('Burger', 5)">Burger - $5</button>
+      <button onclick="addToCart('Pizza', 6)">Pizza - $6</button>
+    </section>
+
+    <section id="drinks" class="section hidden">
+      <h2>Drinks</h2>
+      <button onclick="addToCart('Water', 2)">Water - $2</button>
+      <button onclick="addToCart('Juice', 3)">Juice - $3</button>
+    </section>
+
+    <section id="cart" class="section hidden">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="total">0</span></p>
+      <button onclick="goToPayment()">Proceed to Payment</button>
+    </section>
+
+    <section id="payment" class="section hidden">
+      <h2>Payment</h2>
+      <p>Thanks for your order! 🍽️</p>
+      <button onclick="resetApp()">New Order</button>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
